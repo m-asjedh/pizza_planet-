@@ -1,37 +1,33 @@
 package database
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
+	"pizza_planet_backend/models"
 
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "postgres"
-	password = "asjedh02"
-	dbname   = "pizza_planet"
-)
-
-var DB *sql.DB
-
+var DB *gorm.DB
 
 func Connect() {
-	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+    dsn := "host=localhost user=postgres password=asjedh02 dbname=pizza_planet port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+    var err error
+    DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+    if err != nil {
+        log.Fatal("Failed to connect to database:", err)
+    }
 
-	var err error
-	DB, err = sql.Open("postgres", psqlconn)
+	err = DB.AutoMigrate(
+		&models.Pizza{},
+		&models.Beverage{},
+		&models.Appetizer{},
+		&models.Topping{},
+		&models.Order{},
+	)
 	if err != nil {
-		log.Fatal("Error opening database: ", err)
+		log.Fatalf("Failed to migrate database: %v", err)
 	}
 
-	err = DB.Ping()
-	if err != nil {
-		log.Fatal("Error connecting to the database: ", err)
-	} else {
-		fmt.Println("Successfully connected to the database!")
-	}
+    log.Println("Database connected successfully")
 }
