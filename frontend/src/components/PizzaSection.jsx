@@ -1,33 +1,142 @@
 import Card from "./Card";
 import PizzaImg from "../assets/pizza.svg";
-import ToppingsImg from "../assets/toppings.svg";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useTotalPrice } from "../context/TotalPriceContext";
 
 const PizzaSection = () => {
+  const { addItem } = useTotalPrice();
+  const [pizzaType, setPizzaType] = useState([
+    { id: 1, name: "Small", price: 1000 },
+    { id: 2, name: "Medium", price: 2000 },
+    { id: 3, name: "Large", price: 3000 },
+  ]);
+  const [toppings, setToppings] = useState([]);
+  const [selectedPizzaType, setSelectedPizzaType] = useState(null);
+  const [selectedTopping, setSelectedTopping] = useState(null);
+  const [quantity, setQuantity] = useState();
+  const [createdCards, setCreatedCards] = useState([]);
+
+  useEffect(() => {
+    const fetchToppings = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/toppings");
+        setToppings(response.data);
+      } catch (error) {
+        console.error("Error fetching toppings:", error);
+      }
+    };
+    fetchToppings();
+  }, []);
+
+  const handlePizzaTypeChange = (e) => {
+    const selectedType = pizzaType.find((type) => type.name === e.target.value);
+    setSelectedPizzaType(selectedType);
+  };
+
+  const handleToppingChange = (e) => {
+    const selectedTopping = toppings.find(
+      (topping) => topping.name === e.target.value
+    );
+    setSelectedTopping(selectedTopping);
+  };
+
+  const handleQuantityChange = (e) => {
+    const value = Math.max(1, parseInt(e.target.value, 10));
+    setQuantity(value);
+  };
+
+  const handleCreateCard = () => {
+    if (selectedPizzaType && selectedTopping && quantity > 0) {
+      const totalPrice =
+        (selectedPizzaType.price + selectedTopping.price) * quantity;
+
+      const newCard = {
+        id: Date.now(),
+        name: `${selectedPizzaType.name} Pizza with ${selectedTopping.name}`,
+        price: totalPrice,
+        quantity,
+      };
+
+      setCreatedCards((prevCards) => [...prevCards, newCard]);
+      addItem(newCard);
+      setSelectedPizzaType(null);
+      setSelectedTopping(null);
+      setQuantity(1);
+    } else {
+      alert("Please select pizza type, topping, and enter a valid quantity.");
+    }
+  };
+
   return (
-    <>
-      <div className="text-xl font-semibold mb-4 text-center">
-        Select Pizza & Toppings
-      </div>
-      <div className="my-4 mx-5 md:mx-20 h-auto border rounded-md p-4">
-        <div className="text-xl font-semibold m-4 text-center">Pizza</div>
+    <div className="p-4">
+      <div className="my-4 h-auto border rounded-md p-4">
+        <div className="text-xl font-semibold mb-10 text-center ">
+          Select Pizza, Toppings, and Quantity
+        </div>
+        <div className="flex flex-col md:flex-row md:justify-between">
+          <select
+            value={selectedPizzaType?.name || ""}
+            onChange={handlePizzaTypeChange}
+            className="mb-4 p-2 border rounded-md"
+          >
+            <option value="" disabled>
+              Select Pizza Type
+            </option>
+            {pizzaType.map((type) => (
+              <option key={type.id} value={type.name}>
+                {type.name} (Rs. {type.price})
+              </option>
+            ))}
+          </select>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <Card image={PizzaImg} name="Delicious Pizza" price="12.99" />
-          <Card image={PizzaImg} name="Pepperoni Pizza" price="14.99" />
-          <Card image={PizzaImg} name="Cheese Pizza" price="11.99" />
-          <Card image={PizzaImg} name="Veggie Pizza" price="13.99" />
+          <select
+            value={selectedTopping?.name || ""}
+            onChange={handleToppingChange}
+            className="mb-4 p-2 border rounded-md"
+          >
+            <option value="" disabled>
+              Select Topping
+            </option>
+            {toppings.map((topping) => (
+              <option key={topping.id} value={topping.name}>
+                {topping.name} (Rs. {topping.price})
+              </option>
+            ))}
+          </select>
+
+          <input
+            type="number"
+            value={quantity}
+            onChange={handleQuantityChange}
+            min="1"
+            className="mb-4 p-2 border rounded-md"
+            placeholder="Select the Qauntity"
+          />
+
+          <button
+            onClick={handleCreateCard}
+            className="mb-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          >
+            Create the PIZZA
+          </button>
         </div>
 
-        <div className="text-xl font-semibold m-4 text-center">Toppings</div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <Card image={ToppingsImg} name="Spicy Red Sauce" price="12.99" />
-          <Card image={ToppingsImg} name="BBQ Sauce." price="14.99" />
-          <Card image={ToppingsImg} name="Tomato sauce" price="11.99" />
-          <Card image={ToppingsImg} name="Marinara sauce" price="13.99" />
+        <div className="flex justify-center">
+          <div className="flex flex-wrap justify-center gap-4">
+            {createdCards.map((card) => (
+              <Card
+                key={card.id}
+                image={PizzaImg}
+                name={card.name}
+                price={card.price}
+                quantity={card.quantity}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

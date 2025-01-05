@@ -7,7 +7,7 @@ const Navbar = () => {
   const tabs = ["HOME", "ORDERS", "PRODUCTS"];
 
   return (
-    <div className="bg-black h-[60px]  m-2 flex justify-between items-center px-6 rounded-full">
+    <div className="bg-black h-[60px]  m-2 flex justify-between items-center px-6 rounded-full mb-10">
       <div className="flex items-center">
         <img src={logo} alt="Logo" className="h-[40px]" />
       </div>
