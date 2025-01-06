@@ -14,7 +14,7 @@ const PizzaSection = () => {
   const [createdCards, setCreatedCards] = useState([]);
 
   useEffect(() => {
-    const fetchToppings = async () => {
+    const fetchPizzaAndToppings = async () => {
       try {
         const pizzaTypeResponse = await axios.get(
           "http://localhost:8080/pizzas"
@@ -25,10 +25,10 @@ const PizzaSection = () => {
         setPizzaType(pizzaTypeResponse.data);
         setToppings(topppingsResponse.data);
       } catch (error) {
-        console.error("Error fetching toppings:", error);
+        console.error("Error fetching data:", error);
       }
     };
-    fetchToppings();
+    fetchPizzaAndToppings();
   }, []);
 
   const handlePizzaTypeChange = (e) => {
@@ -73,7 +73,7 @@ const PizzaSection = () => {
 
   return (
     <div className="p-4">
-      <div className="my-4 h-auto border rounded-md p-4">
+      <div className="my-4 h-auto border rounded-md p-4 bg-gray-100">
         <div className="text-xl font-semibold mb-10 text-center ">
           Select Pizza, Toppings, and Quantity
         </div>
