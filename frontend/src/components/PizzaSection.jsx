@@ -73,7 +73,7 @@ const PizzaSection = () => {
 
   return (
     <div className="p-4">
-      <div className="my-4 h-auto border rounded-md p-4 bg-gray-100">
+      <div className="my-4 h-auto border rounded-md p-4 bg-white ">
         <div className="text-xl font-semibold mb-10 text-center ">
           Select Pizza, Toppings, and Quantity
         </div>

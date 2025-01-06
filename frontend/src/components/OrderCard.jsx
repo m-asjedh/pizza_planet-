@@ -39,7 +39,7 @@ const OrderCard = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-gray-100 min-h-screen m-2 lg:m-10 rounded-lg">
       {orders.length === 0 ? (
         <p className="text-center text-gray-500 text-lg">No orders found</p>
       ) : (
@@ -50,17 +50,19 @@ const OrderCard = () => {
           >
             <div className="flex flex-col md:flex-row justify-between items-start gap-6">
               <div className="flex-1 space-y-4">
-                <div className="text-xl font-semibold text-gray-800">
+                <div className="text-xl font-semibold ">
                   Order ID: {order.id}
                 </div>
-                <div className="text-sm text-gray-600">
-                  <span className="font-medium">Customer Name: </span>{" "}
+                <div className="text-md ">
+                  <span>Customer Name: </span>
                   {order.customer_name}
                 </div>
-                <div className="text-sm text-gray-600">
-                  <span className="font-medium">Order Date: </span>{" "}
-                  {new Date(order.order_date).toLocaleDateString()}{" "}
-                  {new Date(order.order_date).toLocaleTimeString()}
+                <div className="text-md ">
+                  <span>Order Date: </span>
+                  <span>{new Date(order.order_date).toLocaleDateString()}</span>
+                  <span className="ml-2">
+                    {new Date(order.order_date).toLocaleTimeString()}
+                  </span>
                 </div>
               </div>
 

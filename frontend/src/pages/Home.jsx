@@ -11,10 +11,12 @@ const Home = () => {
       <TotalPriceProvider>
         <Navbar />
         <h1 className="text-2xl font-bold text-center ">Create Order</h1>
-        <PizzaSection />
-        <AppetizerSection />
-        <BeverageSection />
-        <OrderSummary />
+        <div className="p-6 bg-gray-100 min-h-screen m-2 lg:m-10 rounded-lg">
+          <PizzaSection />
+          <AppetizerSection />
+          <BeverageSection />
+          <OrderSummary />
+        </div>
       </TotalPriceProvider>
     </div>
   );

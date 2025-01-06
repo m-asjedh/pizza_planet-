@@ -69,7 +69,7 @@ const OrderSummary = () => {
       <div className="text-2xl font-semibold text-center mb-8">
         Order Summary
       </div>
-      <div className="bg-gray-100 rounded-lg shadow-md p-5 md:p-8 mx-auto max-w-4xl">
+      <div className="bg-white rounded-lg shadow-md p-5 md:p-8 mx-auto max-w-4xl">
         <div className="space-y-4">
           {totalPrice.map((item, index) => (
             <div
@@ -113,12 +113,12 @@ const OrderSummary = () => {
       <div className="text-2xl font-semibold text-center mt-14 mb-8">
         Customer Details
       </div>
-      <div className="bg-gray-100 rounded-lg shadow-md p-5 md:p-8 mx-auto max-w-4xl">
+      <div className="bg-white rounded-lg shadow-md p-5 md:p-8 mx-auto max-w-4xl">
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4">
             <label
               htmlFor="customerName"
-              className="w-full sm:w-1/3 text-sm font-medium text-gray-700"
+              className="w-full sm:w-1/3 text-md font-medium "
             >
               Name
             </label>
@@ -135,7 +135,7 @@ const OrderSummary = () => {
           <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4">
             <label
               htmlFor="customerEmail"
-              className="w-full sm:w-1/3 text-sm font-medium text-gray-700"
+              className="w-full sm:w-1/3 text-md font-medium "
             >
               Email
             </label>
@@ -152,7 +152,7 @@ const OrderSummary = () => {
           <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4">
             <label
               htmlFor="customerPhoneNo"
-              className="w-full sm:w-1/3 text-sm font-medium text-gray-700"
+              className="w-full sm:w-1/3 text-md font-medium "
             >
               Phone Number
             </label>
