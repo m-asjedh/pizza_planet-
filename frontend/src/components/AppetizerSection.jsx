@@ -40,7 +40,7 @@ const AppetizerSection = () => {
       const totalPrice = selectedAppetizer.price * quantity;
 
       const newCard = {
-        id: Date.now(),
+        appteizerId: selectedAppetizer.id,
         name: selectedAppetizer.name,
         price: totalPrice,
         quantity,

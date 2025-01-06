@@ -14,9 +14,11 @@ export const TotalPriceProvider = ({ children }) => {
     return totalPrice.reduce((total, item) => total + item.price, 0);
   };
 
+  console.log(totalPrice);
+
   return (
     <TotalPriceContext.Provider
-      value={{ totalPrice, addItem, calculateTotalPrice }}
+      value={{ totalPrice, addItem, calculateTotalPrice, setTotalPrice }}
     >
       {children}
     </TotalPriceContext.Provider>

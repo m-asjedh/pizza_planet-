@@ -1,8 +1,69 @@
 import { FaRegTrashCan } from "react-icons/fa6";
 import { useTotalPrice } from "../context/TotalPriceContext";
+import { useState } from "react";
+import axios from "axios";
 
 const OrderSummary = () => {
-  const { totalPrice, calculateTotalPrice } = useTotalPrice();
+  const { totalPrice, calculateTotalPrice, setTotalPrice } = useTotalPrice();
+  const [customerName, setCusomterName] = useState("");
+  const [customerEmail, setCusomterEmail] = useState("");
+  const [cusomterPhoneNo, setCusomterPhoneNo] = useState("");
+
+  const handlOrderCreate = async () => {
+    if (totalPrice.length == 0) {
+      alert("No items in the order");
+      return;
+    }
+    const total = calculateTotalPrice();
+
+    const orderPayload = {
+      customer_name: customerName,
+      email: customerEmail,
+      phone: cusomterPhoneNo,
+      items: totalPrice.map((item) => ({
+        pizza_id: item.pizzaTypeId || null,
+        topping_id: item.toppingId || null,
+        appetizer_id: item.appetizerId || null,
+        beverage_id: item.beverageId || null,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+      total_price: total,
+      order_date: new Date().toISOString(),
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/orders",
+        orderPayload
+      );
+      if (response.status === 201) {
+        alert("Order created successfully!");
+        console.log("Order Payload:", orderPayload);
+        setTotalPrice([]);
+        setCusomterName("");
+        setCusomterEmail("");
+        setCusomterPhoneNo("");
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
+      alert("Failed to create order. Please try again.");
+    }
+  };
+
+  const handleCustomerName = (e) => {
+    setCusomterName(e.target.value);
+  };
+
+  const handleCustomerEmail = (e) => {
+    setCusomterEmail(e.target.value);
+  };
+
+  const handleCustomerPhoneNo = (e) => {
+    setCusomterPhoneNo(e.target.value);
+  };
+
   return (
     <div className="p-5 md:p-10">
       <div className="text-2xl font-semibold text-center mb-8">
@@ -10,9 +71,9 @@ const OrderSummary = () => {
       </div>
       <div className="bg-gray-100 rounded-lg shadow-md p-5 md:p-8 mx-auto max-w-4xl">
         <div className="space-y-4">
-          {totalPrice.map((item) => (
+          {totalPrice.map((item, index) => (
             <div
-              key={item.id}
+              key={index}
               className="flex flex-col md:flex-row items-center justify-between gap-4 p-3 border rounded-lg bg-white shadow-sm"
             >
               <div className="flex items-center gap-4 flex-1">
@@ -47,11 +108,72 @@ const OrderSummary = () => {
           <div>Total</div>
           <div>Rs. {calculateTotalPrice()}</div>
         </div>
+      </div>
 
-        <div className="flex justify-center mt-8">
-          <button className="py-3 px-8 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-colors duration-200">
-            Create Order
-          </button>
+      <div className="text-2xl font-semibold text-center mt-14 mb-8">
+        Customer Details
+      </div>
+      <div className="bg-gray-100 rounded-lg shadow-md p-5 md:p-8 mx-auto max-w-4xl">
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4">
+            <label
+              htmlFor="customerName"
+              className="w-full sm:w-1/3 text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              id="customerName"
+              value={customerName}
+              onChange={handleCustomerName}
+              placeholder="Enter customer name"
+              className="w-full sm:w-2/3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4">
+            <label
+              htmlFor="customerEmail"
+              className="w-full sm:w-1/3 text-sm font-medium text-gray-700"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="customerEmail"
+              value={customerEmail}
+              onChange={handleCustomerEmail}
+              placeholder="Enter customer email"
+              className="w-full sm:w-2/3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-4">
+            <label
+              htmlFor="customerPhoneNo"
+              className="w-full sm:w-1/3 text-sm font-medium text-gray-700"
+            >
+              Phone Number
+            </label>
+            <input
+              type="text"
+              id="customerPhoneNo"
+              value={cusomterPhoneNo}
+              onChange={handleCustomerPhoneNo}
+              placeholder="Enter customer phone number"
+              className="w-full sm:w-2/3 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <div className="flex justify-center mt-8">
+            <button
+              onClick={handlOrderCreate}
+              className="py-3 px-8 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-colors duration-200"
+            >
+              Create Order
+            </button>
+          </div>
         </div>
       </div>
     </div>

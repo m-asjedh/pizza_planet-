@@ -6,11 +6,7 @@ import { useTotalPrice } from "../context/TotalPriceContext";
 
 const PizzaSection = () => {
   const { addItem } = useTotalPrice();
-  const [pizzaType, setPizzaType] = useState([
-    { id: 1, name: "Small", price: 1000 },
-    { id: 2, name: "Medium", price: 2000 },
-    { id: 3, name: "Large", price: 3000 },
-  ]);
+  const [pizzaType, setPizzaType] = useState([]);
   const [toppings, setToppings] = useState([]);
   const [selectedPizzaType, setSelectedPizzaType] = useState(null);
   const [selectedTopping, setSelectedTopping] = useState(null);
@@ -20,8 +16,14 @@ const PizzaSection = () => {
   useEffect(() => {
     const fetchToppings = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/toppings");
-        setToppings(response.data);
+        const pizzaTypeResponse = await axios.get(
+          "http://localhost:8080/pizzas"
+        );
+        const topppingsResponse = await axios.get(
+          "http://localhost:8080/toppings"
+        );
+        setPizzaType(pizzaTypeResponse.data);
+        setToppings(topppingsResponse.data);
       } catch (error) {
         console.error("Error fetching toppings:", error);
       }
@@ -52,8 +54,9 @@ const PizzaSection = () => {
         (selectedPizzaType.price + selectedTopping.price) * quantity;
 
       const newCard = {
-        id: Date.now(),
-        name: `${selectedPizzaType.name} Pizza with ${selectedTopping.name}`,
+        pizzaTypeId: selectedPizzaType.id,
+        toppingId: selectedTopping.id,
+        name: `${selectedPizzaType.name} with ${selectedTopping.name}`,
         price: totalPrice,
         quantity,
       };
@@ -124,9 +127,9 @@ const PizzaSection = () => {
 
         <div className="flex justify-center">
           <div className="flex flex-wrap justify-center gap-4">
-            {createdCards.map((card) => (
+            {createdCards.map((card, index) => (
               <Card
-                key={card.id}
+                key={index}
                 image={PizzaImg}
                 name={card.name}
                 price={card.price}
