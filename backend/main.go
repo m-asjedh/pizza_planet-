@@ -22,6 +22,10 @@ func main() {
 		AllowCredentials: true,
 	}))
 
+	r.OPTIONS("/*path", func(c *gin.Context) {
+		c.Status(204)
+	})
+
 	routes.PizzaRoutes(r)
 	routes.ToppingRoutes(r)
 	routes.BeverageRoutes(r)

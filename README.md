@@ -6,12 +6,14 @@ A web application to manage pizza billing efficiently. This project allows the p
 
 ## 🌟 Features
 
-- 🛒 **Create Orders**: 
+- 🛒 **Create Orders**:
+
   - Select pizza options, toppings, beverages, and appetizers.
   - Add customer details (name, email, and phone number).
   - Create the order seamlessly.
 
 - 📄 **Order Management**:
+
   - View all created orders.
   - Delete orders.
   - Update order status from **UNPAID** to **PAID**.
@@ -22,7 +24,7 @@ A web application to manage pizza billing efficiently. This project allows the p
     - Add new products.
     - Edit existing products.
     - Delete products.
-      
+
 ---
 
 ## 🛠️ Tech Stack
@@ -37,11 +39,15 @@ A web application to manage pizza billing efficiently. This project allows the p
 ## 🚀 How to Run the Project
 
 ## 1️⃣ Clone the Repository
+
 ### https://github.com/m-asjedh/pizza_planet-.git
+
+### Install the CORS Unblock extension in google chrome and enable it so that request will work smoothly
 
 ---
 
 ## 2️⃣ Backend Setup
+
 - cd backend
 - go mod tidy
 - Create a database "pizza_planet".
@@ -49,6 +55,7 @@ A web application to manage pizza billing efficiently. This project allows the p
 - go run main.go
 
 ## 3️⃣ Frontend Setup
+
 - cd frontend
 - npm install
 - npm run dev
@@ -56,6 +63,7 @@ A web application to manage pizza billing efficiently. This project allows the p
 ---
 
 ## 🔧 API Endpoints
+
 🍕 Pizza Management
 GET /pizzas/ - Get all pizzas.
 GET /pizzas/:id - Get a specific pizza by ID.
@@ -93,8 +101,4 @@ DELETE /orders/:id - Delete an order.
 
 ## 🛠️ **Video of Using the application**
 
-
-
 https://github.com/user-attachments/assets/fd512260-921f-4851-98c6-ba8979e7108a
-
-
