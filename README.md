@@ -8,18 +8,21 @@ A web application to manage pizza billing efficiently. This project allows the p
 
 - 🛒 **Create Orders**: 
   - Select pizza options, toppings, beverages, and appetizers.
-  - Add customer details name, email and phone number.
-  - Create the order
+  - Add customer details (name, email, and phone number).
+  - Create the order seamlessly.
 
 - 📄 **Order Management**:
-  - Can view all the orders created.
-  - Can delete orders
-  - Can update the order status from UNPAID to PAID
+  - View all created orders.
+  - Delete orders.
+  - Update order status from **UNPAID** to **PAID**.
 
 - 🍕 **Product Management**:
   - Manage toppings, beverages, and appetizers via an intuitive UI.
-  - API-driven CRUD operations for products like add new products, edit the exsiting products and delete existing products.
-
+  - Perform API-driven CRUD operations:
+    - Add new products.
+    - Edit existing products.
+    - Delete products.
+      
 ---
 
 ## 🛠️ Tech Stack
@@ -34,7 +37,7 @@ A web application to manage pizza billing efficiently. This project allows the p
 ## 🚀 How to Run the Project
 
 ## 1️⃣ Clone the Repository
-### git clone https://github.com/your-username/pizza-billing-app.git
+### https://github.com/m-asjedh/pizza_planet-.git
 ### cd pizza-billing-app
 
 ---
