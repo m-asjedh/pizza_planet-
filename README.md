@@ -38,7 +38,6 @@ A web application to manage pizza billing efficiently. This project allows the p
 
 ## 1️⃣ Clone the Repository
 ### https://github.com/m-asjedh/pizza_planet-.git
-### cd pizza-billing-app
 
 ---
 
