@@ -1,8 +1,8 @@
 import { FaRegTrashCan } from "react-icons/fa6";
 
-const Card = ({ image, name, price, quantity }) => {
+const Card = ({ image, name, price, quantity, onRemove }) => {
   return (
-    <div className="group flex flex-col m-[5px] h-[350px] w-[250px] items-center justify-between relative overflow-hidden rounded-lg shadow-lg bg-gray-200">
+    <div className="group flex flex-col m-[5px] h-[350px] w-[200px] lg:w-[250px] items-center justify-between relative overflow-hidden rounded-lg shadow-lg bg-gray-200">
       <div className="flex-1 w-full flex items-center justify-center z-10">
         <img
           src={image}
@@ -18,7 +18,10 @@ const Card = ({ image, name, price, quantity }) => {
       </div>
 
       <div className="absolute inset-0 bg-gray-300 bg-opacity-50 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20 cursor-pointer">
-        <div className="w-[50px] h-[50px] rounded-full bg-white flex items-center justify-center transition-transform duration-300 hover:bg-red-600 transform group-hover:scale-110">
+        <div
+          onClick={onRemove}
+          className="w-[50px] h-[50px] rounded-full bg-white flex items-center justify-center transition-transform duration-300 hover:bg-red-600 transform group-hover:scale-110"
+        >
           <FaRegTrashCan className="text-gray-700 hover:text-white cursor-pointer text-xl" />
         </div>
       </div>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const OrderCard = () => {
   const [orders, setOrders] = useState([]);
@@ -25,7 +26,7 @@ const OrderCard = () => {
         }
       );
       if (response.status === 200) {
-        alert("Order marked as paid!");
+        toast.success(`Order ${orderId} marked as paid`);
         setOrders(
           orders.map((order) =>
             order.id === orderId ? { ...order, order_status: "paid" } : order
@@ -34,10 +35,20 @@ const OrderCard = () => {
       }
     } catch (error) {
       console.error("Error marking order as paid:", error);
-      alert("Failed to mark order as paid. Please try again.");
+      toast.warn("Failed to mark order as paid. Please try again.");
     }
   };
 
+  const handleOrderDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/orders/${id}`);
+      setOrders((prev) => prev.filter((item) => item.id !== id));
+      toast.success(`Deleted Successfully`);
+    } catch (error) {
+      console.error("Error deleting appetizer:", error);
+      toast.warn("Error deleting");
+    }
+  };
   return (
     <div className="p-6 bg-gray-100 min-h-screen m-2 lg:m-10 rounded-lg">
       {orders.length === 0 ? (
@@ -108,7 +119,10 @@ const OrderCard = () => {
                 >
                   Mark As Paid
                 </button>
-                <button className="py-2 px-12 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition-colors duration-300 w-full md:w-auto">
+                <button
+                  onClick={() => handleOrderDelete(order.id)}
+                  className="py-2 px-12 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition-colors duration-300 w-full md:w-auto"
+                >
                   Delete
                 </button>
               </div>

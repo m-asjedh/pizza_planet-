@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify";
 import ManageAppetizers from "../components/ManageAppetizer";
 import ManageBeverages from "../components/ManageBeverage";
 import ManagePizzaTypes from "../components/ManagePizzaType";
@@ -13,6 +14,7 @@ const Products = () => {
           Manage Products in the Store
         </h1>
         <div className="space-y-8">
+          <ToastContainer />
           <ManagePizzaTypes />
           <ManageToppings />
           <ManageAppetizers />

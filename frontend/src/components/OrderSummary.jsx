@@ -2,9 +2,11 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { useTotalPrice } from "../context/TotalPriceContext";
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const OrderSummary = () => {
-  const { totalPrice, calculateTotalPrice, setTotalPrice } = useTotalPrice();
+  const { totalPrice, calculateTotalPrice, setTotalPrice, removeItem } =
+    useTotalPrice();
   const [customerName, setCusomterName] = useState("");
   const [customerEmail, setCusomterEmail] = useState("");
   const [cusomterPhoneNo, setCusomterPhoneNo] = useState("");
@@ -39,7 +41,7 @@ const OrderSummary = () => {
         orderPayload
       );
       if (response.status === 201) {
-        alert("Order created successfully!");
+        toast.success("Order Created Succesfully");
         console.log("Order Payload:", orderPayload);
         setTotalPrice([]);
         setCusomterName("");
@@ -48,7 +50,7 @@ const OrderSummary = () => {
       }
     } catch (error) {
       console.error("Error creating order:", error);
-      alert("Failed to create order. Please try again.");
+      toast.warn("Failed to create order. Please try again.");
     }
   };
 
@@ -85,20 +87,13 @@ const OrderSummary = () => {
                 </div>
               </div>
 
-              <div className="text-sm md:text-base flex justify-between items-center gap-4 flex-1 md:justify-center">
+              <div className="text-sm md:text-base flex justify-between items-center gap-4 md:justify-center">
                 <div className="text-gray-700">
                   Rs. {item.price / item.quantity}
                 </div>
                 <div className="font-semibold text-gray-800">
                   Rs. {item.price}
                 </div>
-              </div>
-
-              <div>
-                <FaRegTrashCan
-                  color="red"
-                  className="cursor-pointer hover:scale-110 transition-transform duration-200"
-                />
               </div>
             </div>
           ))}

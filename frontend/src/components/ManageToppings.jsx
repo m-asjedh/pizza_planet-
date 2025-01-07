@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ManageToppings = () => {
   const [toppings, setToppings] = useState([]);
@@ -45,8 +46,10 @@ const ManageToppings = () => {
         )
       );
       setEditingTopping(null);
+      toast.success(`${editingTopping.name} updated`);
     } catch (error) {
       console.error("Error updating topping:", error);
+      toast.warn(`Error updating ${editingTopping.name}`);
     }
   };
 
@@ -54,8 +57,10 @@ const ManageToppings = () => {
     try {
       await axios.delete(`http://localhost:8080/toppings/${id}`);
       setToppings((prev) => prev.filter((item) => item.id !== id));
+      toast.success(`Deleted Successfully`);
     } catch (error) {
       console.error("Error deleting topping:", error);
+      toast.warn("Error deleting");
     }
   };
 
@@ -78,8 +83,10 @@ const ManageToppings = () => {
       setShowAddModal(false);
       setNewToppingName("");
       setNewToppingPrice("");
+      toast.success(`Added ${newToppingName} `);
     } catch (error) {
       console.error("Error adding topping:", error);
+      toast.warn(`Error adding ${newToppingName}`);
     }
   };
 

@@ -7,18 +7,25 @@ export const TotalPriceProvider = ({ children }) => {
 
   const addItem = (item) => {
     setTotalPrice((prevItems) => [...prevItems, item]);
-    console.log(item);
   };
 
   const calculateTotalPrice = () => {
     return totalPrice.reduce((total, item) => total + item.price, 0);
   };
 
-  console.log(totalPrice);
+  const removeItem = (id) => {
+    setTotalPrice((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
 
   return (
     <TotalPriceContext.Provider
-      value={{ totalPrice, addItem, calculateTotalPrice, setTotalPrice }}
+      value={{
+        totalPrice,
+        addItem,
+        calculateTotalPrice,
+        setTotalPrice,
+        removeItem,
+      }}
     >
       {children}
     </TotalPriceContext.Provider>

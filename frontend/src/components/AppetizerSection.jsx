@@ -3,9 +3,10 @@ import AppetizerImg from "../assets/appetizer.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTotalPrice } from "../context/TotalPriceContext";
+import { toast } from "react-toastify";
 
 const AppetizerSection = () => {
-  const { addItem } = useTotalPrice();
+  const { addItem, removeItem } = useTotalPrice();
   const [appetizers, setAppetizers] = useState([]);
   const [selectedAppetizer, setSelectedAppetizer] = useState(null);
   const [quantity, setQuantity] = useState();
@@ -50,9 +51,16 @@ const AppetizerSection = () => {
       addItem(newCard);
       setSelectedAppetizer(null);
       setQuantity(1);
+      toast.success(`${selectedAppetizer.name} created`);
     } else {
-      alert("Please select appetizer and qaunttity");
+      toast.warn("Please select appetizer and qaunttity");
     }
+  };
+
+  const handleRemoveCard = (id) => {
+    setCreatedCards((prevCards) => prevCards.filter((card) => card.id !== id));
+    removeItem(id);
+    toast.success("Pizza removed successfully!");
   };
 
   return (
@@ -104,6 +112,7 @@ const AppetizerSection = () => {
                 name={card.name}
                 price={card.price}
                 quantity={card.quantity}
+                onRemove={() => handleRemoveCard(card.id)}
               />
             ))}
           </div>

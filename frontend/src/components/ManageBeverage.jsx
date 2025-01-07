@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ManageBeverages = () => {
   const [beverages, setBeverages] = useState([]);
@@ -45,8 +46,10 @@ const ManageBeverages = () => {
         )
       );
       setEditingBeverage(null);
+      toast.success(`${editingBeverage.name} updated`);
     } catch (error) {
       console.error("Error updating beverage:", error);
+      toast.warn(`Error updating ${editingAppetizer.name}`);
     }
   };
 
@@ -54,8 +57,10 @@ const ManageBeverages = () => {
     try {
       await axios.delete(`http://localhost:8080/beverages/${id}`);
       setBeverages((prev) => prev.filter((item) => item.id !== id));
+      toast.success(`Deleted Successfully`);
     } catch (error) {
       console.error("Error deleting beverage:", error);
+      toast.warn("Error deleting");
     }
   };
 
@@ -70,8 +75,10 @@ const ManageBeverages = () => {
       setShowAddModal(false);
       setNewBeverageName("");
       setNewBeveragePrice("");
+      toast.success(`Added ${newBeveragePrice} `);
     } catch (error) {
       console.error("Error adding beverage:", error);
+      toast.warn(`Error adding ${newBeveragePrice}`);
     }
   };
 

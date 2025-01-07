@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ManagePizzaTypes = () => {
   const [pizzaTypes, setPizzaTypes] = useState([]);
@@ -42,8 +43,10 @@ const ManagePizzaTypes = () => {
         )
       );
       setEditingPizza(null);
+      toast.success(`${editingPizza.name} updated`);
     } catch (error) {
       console.error("Error updating pizza type:", error);
+      toast.warn(`Error updating ${editingPizza.name}`);
     }
   };
 
@@ -51,8 +54,10 @@ const ManagePizzaTypes = () => {
     try {
       await axios.delete(`http://localhost:8080/pizzas/${id}`);
       setPizzaTypes((prev) => prev.filter((item) => item.id !== id));
+      toast.success(`Deleted Successfully`);
     } catch (error) {
       console.error("Error deleting pizza type:", error);
+      toast.warn("Error deleting");
     }
   };
 
