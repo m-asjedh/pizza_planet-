@@ -1,10 +1,11 @@
-import { FaRegTrashCan } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 import { useTotalPrice } from "../context/TotalPriceContext";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const OrderSummary = () => {
+  const naviagte = useNavigate();
   const { totalPrice, calculateTotalPrice, setTotalPrice, removeItem } =
     useTotalPrice();
   const [customerName, setCusomterName] = useState("");
@@ -47,6 +48,7 @@ const OrderSummary = () => {
         setCusomterName("");
         setCusomterEmail("");
         setCusomterPhoneNo("");
+        setTimeout(() => naviagte("/orders"), 2000);
       }
     } catch (error) {
       console.error("Error creating order:", error);

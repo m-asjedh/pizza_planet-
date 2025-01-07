@@ -41,6 +41,7 @@ const BeverageSection = () => {
       const totalPrice = selectedBeverage.price * quantity;
 
       const newCard = {
+        id: Date.now() + Math.random(),
         beverageId: selectedBeverage.id,
         name: selectedBeverage.name,
         price: totalPrice,
@@ -60,7 +61,7 @@ const BeverageSection = () => {
   const handleRemoveCard = (id) => {
     setCreatedCards((prevCards) => prevCards.filter((card) => card.id !== id));
     removeItem(id);
-    toast.success("Pizza removed successfully!");
+    toast.success("Beverage removed successfully!");
   };
 
   return (

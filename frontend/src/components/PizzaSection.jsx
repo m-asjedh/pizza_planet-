@@ -55,6 +55,7 @@ const PizzaSection = () => {
         (selectedPizzaType.price + selectedTopping.price) * quantity;
 
       const newCard = {
+        id: Date.now() + Math.random(),
         pizzaTypeId: selectedPizzaType.id,
         toppingId: selectedTopping.id,
         name: `${selectedPizzaType.name} with ${selectedTopping.name}`,

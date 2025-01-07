@@ -41,6 +41,7 @@ const AppetizerSection = () => {
       const totalPrice = selectedAppetizer.price * quantity;
 
       const newCard = {
+        id: Date.now() + Math.random(),
         appteizerId: selectedAppetizer.id,
         name: selectedAppetizer.name,
         price: totalPrice,
@@ -60,7 +61,7 @@ const AppetizerSection = () => {
   const handleRemoveCard = (id) => {
     setCreatedCards((prevCards) => prevCards.filter((card) => card.id !== id));
     removeItem(id);
-    toast.success("Pizza removed successfully!");
+    toast.success("Appetizer removed successfully!");
   };
 
   return (
