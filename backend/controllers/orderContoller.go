@@ -31,7 +31,6 @@ func GetOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, order)
 }
 
-// CreateOrder creates a new order in the database
 func CreateOrder(c *gin.Context) {
 	var orderPayload struct {
 		CustomerName string `json:"customer_name"`
@@ -48,20 +47,15 @@ func CreateOrder(c *gin.Context) {
 		TotalPrice float64 `json:"total_price"` 
 	}
 
-	// Bind the JSON payload
 	if err := c.ShouldBindJSON(&orderPayload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	// Serialize the items into JSON
 	itemsJSON, err := json.Marshal(orderPayload.Items)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to serialize items"})
 		return
 	}
-
-	// Create the order object
 	order := models.Order{
 		CustomerName: orderPayload.CustomerName,
 		Email:        orderPayload.Email,
@@ -70,8 +64,6 @@ func CreateOrder(c *gin.Context) {
 		TotalPrice:   orderPayload.TotalPrice,
 		OrderDate:    time.Now(),
 	}
-
-	// Save the order in the database
 	if err := database.DB.Create(&order).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create order"})
 		return
@@ -83,18 +75,14 @@ func CreateOrder(c *gin.Context) {
 // UpdateOrderStatus updates the order status to 'paid'
 func UpdateOrderStatus(c *gin.Context) {
     orderID := c.Param("id")  // Get order ID from URL
-
-    // Find the order by ID
     var order models.Order
     if err := database.DB.First(&order, orderID).Error; err != nil {
         c.JSON(http.StatusNotFound, gin.H{"error": "Order not found"})
         return
     }
 
-    // Update the order status to 'paid'
     order.OrderStatus = "paid"
 
-    // Save the updated order in the database
     if err := database.DB.Save(&order).Error; err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update order status"})
         return

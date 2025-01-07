@@ -9,10 +9,10 @@ import (
 func OrderRoutes(router *gin.Engine) {
 	order := router.Group("/orders")
 	{
-		order.GET("/", controllers.GetOrders)       // Get all orders
-		order.GET("/:id", controllers.GetOrder)    // Get a single order by ID
-		order.POST("/", controllers.CreateOrder)   // Create a new order
+		order.GET("/", controllers.GetOrders)       
+		order.GET("/:id", controllers.GetOrder)   
+		order.POST("/", controllers.CreateOrder)   
 		order.PATCH("/:id/status", controllers.UpdateOrderStatus)
-		order.DELETE("/:id", controllers.DeleteOrder) // Delete an order
+		order.DELETE("/:id", controllers.DeleteOrder) 
 	}
 }

@@ -11,10 +11,8 @@ import (
 )
 
 func main() {
-	// Connect to the database
 	database.Connect()
 
-	// Initialize the Gin router
 	r := gin.Default()
 
 	r.Use(cors.New(cors.Config{
@@ -24,14 +22,12 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	// Setup routes
 	routes.PizzaRoutes(r)
 	routes.ToppingRoutes(r)
 	routes.BeverageRoutes(r)
 	routes.AppetizerRoutes(r)
 	routes.OrderRoutes(r)
 
-	// Start the server
 	port := ":8080" 
 	log.Printf("Server running on http://localhost%s", port)
 	err := r.Run(port)

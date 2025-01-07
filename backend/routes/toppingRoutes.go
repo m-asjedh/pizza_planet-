@@ -9,10 +9,10 @@ import (
 func ToppingRoutes(router *gin.Engine) {
 	topping := router.Group("/toppings")
 	{
-		topping.GET("/", controllers.GetToppings)        // Get all toppings
-		topping.GET("/:id", controllers.GetTopping)     // Get a single topping
-		topping.POST("/", controllers.CreateTopping)    // Create a new topping
-		topping.PUT("/:id", controllers.UpdateTopping)  // Update an existing topping
-		topping.DELETE("/:id", controllers.DeleteTopping) // Delete a topping
+		topping.GET("/", controllers.GetToppings)       
+		topping.GET("/:id", controllers.GetTopping)
+		topping.POST("/", controllers.CreateTopping)   
+		topping.PUT("/:id", controllers.UpdateTopping) 
+		topping.DELETE("/:id", controllers.DeleteTopping) 
 	}
 }
