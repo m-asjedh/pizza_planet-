@@ -91,3 +91,9 @@ POST /orders/ - Create a new order.
 PATCH /orders/:id/status - Update the order status.
 DELETE /orders/:id - Delete an order.
 
+## 🛠️ **Video of Using the application**
+
+
+
+https://github.com/user-attachments/assets/40c37623-d3a5-4659-9628-ff50de0757f6
+
