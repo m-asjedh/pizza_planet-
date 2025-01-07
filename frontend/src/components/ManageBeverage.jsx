@@ -75,10 +75,10 @@ const ManageBeverages = () => {
       setShowAddModal(false);
       setNewBeverageName("");
       setNewBeveragePrice("");
-      toast.success(`Added ${newBeveragePrice} `);
+      toast.success(`Added ${newBeverageName} `);
     } catch (error) {
       console.error("Error adding beverage:", error);
-      toast.warn(`Error adding ${newBeveragePrice}`);
+      toast.warn(`Error adding ${newBeverageName}`);
     }
   };
 

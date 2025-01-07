@@ -2,12 +2,16 @@ import { useState, useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FaPlus } from "react-icons/fa6";
 
 const ManagePizzaTypes = () => {
   const [pizzaTypes, setPizzaTypes] = useState([]);
   const [editingPizza, setEditingPizza] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
   const [updatedPrice, setUpdatedPrice] = useState("");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newPizzaTypeName, setNewPizzaTypeName] = useState("");
+  const [newPizzaTypePrice, setnewPizzaTypePrice] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,9 +65,33 @@ const ManagePizzaTypes = () => {
     }
   };
 
+  const handleAddPizzaType = async () => {
+    const price = parseFloat(newPizzaTypePrice);
+    try {
+      const response = await axios.post("http://localhost:8080/pizzas", {
+        name: newPizzaTypeName,
+        price: price,
+      });
+      setPizzaTypes((prev) => [...prev, response.data]);
+      setShowAddModal(false);
+      setNewPizzaTypeName("");
+      setnewPizzaTypePrice("");
+      toast.success(`Added ${newPizzaTypeName} `);
+    } catch (error) {
+      console.error("Error adding beverage:", error);
+      toast.warn(`Error adding ${newPizzaTypeName}`);
+    }
+  };
+
   return (
     <div className="bg-white shadow-md rounded p-6">
       <h2 className="text-lg font-semibold mb-4"> Pizza Types</h2>
+      <button
+        onClick={() => setShowAddModal(true)}
+        className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+      >
+        <FaPlus className="inline mr-2" /> Add New PizzaType
+      </button>
       {pizzaTypes.length === 0 ? (
         <p>No pizza types available</p>
       ) : (
@@ -127,6 +155,46 @@ const ManagePizzaTypes = () => {
                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
               >
                 Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded shadow-lg">
+            <h3 className="text-lg font-bold mb-4">Add New Pizza Type</h3>
+            <div className="mb-4">
+              <label className="block mb-1 font-medium">Name</label>
+              <input
+                type="text"
+                value={newPizzaTypeName}
+                onChange={(e) => setNewPizzaTypeName(e.target.value)}
+                className="w-full border p-2 rounded"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-1 font-medium">Price</label>
+              <input
+                type="number"
+                value={newPizzaTypePrice}
+                onChange={(e) => setnewPizzaTypePrice(e.target.value)}
+                className="w-full border p-2 rounded"
+              />
+            </div>
+            <div className="flex justify-end space-x-2">
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="px-4 py-2 bg-gray-300 rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleAddPizzaType}
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+              >
+                Add
               </button>
             </div>
           </div>
