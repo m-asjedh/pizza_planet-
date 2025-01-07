@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+import { handlePrintInvoice } from "../utils/generateInvoice";
+
 const OrderCard = () => {
   const [orders, setOrders] = useState([]);
 
@@ -124,6 +126,12 @@ const OrderCard = () => {
                   className="py-2 px-12 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition-colors duration-300 w-full md:w-auto"
                 >
                   Delete
+                </button>
+                <button
+                  onClick={() => handlePrintInvoice(order)}
+                  className="py-2 px-6 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-colors duration-300 w-full md:w-auto"
+                >
+                  Print Invoice
                 </button>
               </div>
             </div>
